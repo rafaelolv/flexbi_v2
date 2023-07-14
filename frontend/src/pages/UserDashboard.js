@@ -4,6 +4,13 @@ import { useSelector } from "react-redux";
 import { Series, Dt } from "danfojs/dist/danfojs-base";
 import * as dfd from "danfojs";
 
+import BoxAreaMensal from "../components/estrutura/BoxAreaMensal";
+import BoxAreaDiario from "../components/estrutura/BoxAreaDiario";
+import BoxGraficoMain from "../components/estrutura/BoxGraficoMain";
+
+import style from "../style/UserDashboard.module.css";
+
+
 
 
 const UserDashboard = () => {
@@ -86,8 +93,13 @@ const UserDashboard = () => {
 
 
     return  (
-        <main>
-            <h1>Dashboard do usuário: {dashboard.nome}</h1>
+        <main className={style.main}>
+            <BoxAreaMensal />
+            <BoxGraficoMain />
+            <BoxAreaDiario />
+            
+
+            {/* <h1>Dashboard do usuário: {dashboard.nome}</h1> */}
         </main>
     )
 }

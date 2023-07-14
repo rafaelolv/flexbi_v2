@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 200vh;
+    height: 100%;
+    /* position: relative; */
+
+    /* background: #1B2026; */
+    background: #22262F;
+    backdrop-filter: blur(20px);
+    border-radius: 34px;
+
+    /* width: 1440px;
+    height: 1033px; */
+
+    /* border: 2px solid black; */
+}

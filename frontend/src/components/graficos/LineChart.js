@@ -35,7 +35,7 @@ const LineChart = ({ labels, dataValues }) => {
             },
             title: {
                 display: true,
-                text: 'Lucro bruto por mês',
+                text: 'Lucro diário bruto por mês',
             },
         },
     };
@@ -44,7 +44,7 @@ const LineChart = ({ labels, dataValues }) => {
         labels: labels,
         datasets: [
             {
-                label: 'Lucro',
+                label: 'Lucro diário',
                 data: dataValues,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
@@ -53,9 +53,9 @@ const LineChart = ({ labels, dataValues }) => {
     };
 
     return (
-        <div className={style.lineChart}>
+        <>
             <Line options={options} data={data} />
-        </div>
+        </>
     )
 
 }

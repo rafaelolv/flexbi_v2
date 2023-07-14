@@ -1,0 +1,82 @@
+.boxAreaDiario  {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    align-items: center;
+
+    width: 50vh;
+    height: 95%;
+    margin: 3vh;
+    border-radius: 34px;
+    background-color: rgba(46, 50, 60, 0.6);
+    /* position: relative; */
+    /* border: 1px solid greenyellow; */
+}
+
+.boxInfoDiario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 45%;
+    /* padding: 0vh; */
+    /* border: 1px solid red; */
+    margin-top: 1vh;
+}
+
+.boxInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 40%;
+    margin-top: 2vh;
+    padding: 1vh;
+
+    border-radius: 24.7205px;
+    background: linear-gradient(119.15deg, #2E374B -13.54%, #292F3C 118.09%);
+    box-shadow: 9.71163px 11.654px 77.693px rgba(84, 135, 183, 0.08);
+
+    /* border: 3px solid blue; */
+    
+    /* background: linear-gradient(119.15deg, #2E374B -13.54%, #292F3C 118.09%);
+    box-shadow: 9.71163px 11.654px 77.693px rgba(84, 135, 183, 0.08);
+    border-radius: 24.7205px; */
+
+
+    /* background: linear-gradient(93.58deg, #363E52 -2%, #2B3242 117.56%);
+    box-shadow: inset 8.74047px 9.71163px 18.4521px rgba(61, 73, 100, 0.3);
+    border-radius: 24.7205px; */
+}
+
+.boxInfo header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid blue; */
+}
+
+.boxInfo h3 {
+    color: aliceblue;
+    font-size: 1.5rem;
+}
+
+.boxInfo h4 {
+    font-size: 1.0rem;
+    color: #B6B7BC;
+    margin-left: 2vh;
+}
+
+
+.boxInfo div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+    height: 50%;
+
+    /* border: 1px solid orange; */
+}

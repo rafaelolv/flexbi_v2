@@ -21,15 +21,15 @@ export default props => {
 				{/* <Painel /> */}
 				{/* <Dashboard />
 				<PaginaGeraDadosJSON /> */}
-				<Header />
+				{/* <Header /> */}
 				<Routes>
 					<Route exact path='/main' element={<Main />} />
 					{/* <Route exact path='/login' element={<Login />} /> */}
-					{/* <Route exact path='/formChart' element={<FormPanelChart />} />
-					<Route exact path={"/"} element={<Dashboard />} />
 					<Route exact path={"/home"} element={<UserDashboard />} />
-					<Route exact path={"/form"} element={<FormUploadDados />} />
-					<Route exact path="/gerar" element={<PaginaGeraDadosJSON />} /> */}
+					{/* <Route exact path='/formChart' element={<FormPanelChart />} /> */}
+					{/* <Route exact path={"/"} element={<Dashboard />} /> */}
+					{/* <Route exact path={"/form"} element={<FormUploadDados />} /> */}
+					{/* <Route exact path="/gerar" element={<PaginaGeraDadosJSON />} /> */}
 				</Routes>
 			</BrowserRouter>
 		)

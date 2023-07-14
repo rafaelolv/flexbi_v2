@@ -17,9 +17,9 @@ app.use(express.json()); /* bodyParser.json() is deprecated */
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
 
-// require("../../routes/usuarioRoutes")(app); //passando app para a função que esta nesse caminho
-// require("../../routes/graficoRoutes")(app);
-// require("../../routes/dashboardRoutes")(app);
+require("../routes/usuarioRoutes")(app); //passando app para a função que esta nesse caminho
+require("../routes/graficoRoutes")(app);
+require("../routes/dashboardRoutes")(app);
 
 // app.use("/cadastrousuario", UsuarioRoutes);
 
