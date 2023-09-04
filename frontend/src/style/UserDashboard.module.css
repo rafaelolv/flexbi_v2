@@ -17,3 +17,30 @@
 
     /* border: 2px solid black; */
 }
+
+.mainWithNav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 170vh;
+    margin-left: 30vh;
+    height: 85%;
+    margin-top: 5%;
+    /* position: relative; */
+
+    /* background: #1B2026; */
+    background: #22262F;
+    backdrop-filter: blur(20px);
+    border-radius: 34px;
+
+    /* width: 1440px;
+    height: 1033px; */
+
+    /* border: 2px solid black; */
+}
+
+/* .main {
+
+    width: 200vh;
+} */

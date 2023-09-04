@@ -30,6 +30,18 @@ const BarChart = ({ labels, values }) => {
     console.log(labels);
 
     const options = {
+        onClick: (e, element) => {
+            console.log("e " + e);
+            console.table(e);
+            console.log("element " + element);
+            console.table(element);
+            console.log("element.index " + element[0].index);
+            console.table(element[0].element);
+            if (element.length > 0) {
+              var ind = element[0]._index;
+              alert(ind);
+            }
+        },
         responsive: true,
         plugins: {
             legend: {

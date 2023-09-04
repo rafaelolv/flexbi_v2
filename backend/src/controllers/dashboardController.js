@@ -3,7 +3,7 @@ const Dashboard = require("../models/dashboardModel.js");
 
 exports.create = (req, res, next) => {
 
-    console.log("req " + req.body.nome);
+    console.log("req " + req.body.produto);
     // Validação
 
     // console.log("nome " + req.body.name);
@@ -16,16 +16,19 @@ exports.create = (req, res, next) => {
         res.status(400).send({
             message: "Content can not be empty!"
         });
-        console.log("ENtrou aqui? controler create teste" + req.body.nome)
+        console.log("ENtrou aqui? controler create teste" + req.body.produto);
         return;
     }
 
-    const dashboard = new Dashboard({
-        nome: req.body.nome,
+    const dadosDashboard = new Dashboard({
+        produto: req.body.produto,
+        categoria: req.body.categoria,
+        data: req.body.data,
+        filtros: req.body.filtros,
         id_usuario: 1,
     });
 
-    Dashboard.create(dashboard)
+    Dashboard.create(dadosDashboard)
         .then(data => {
             res.send(data);
         })

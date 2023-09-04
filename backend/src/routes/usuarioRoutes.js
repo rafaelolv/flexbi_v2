@@ -1,7 +1,7 @@
 module.exports = app => {
     const usuarioController = require("../controllers/usuarioController");
     
-    console.log("Chegou aqui em routes!");
+    console.log("Chegou aqui em routesssss!");
 
     var router = require("express").Router();
 

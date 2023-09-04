@@ -6,7 +6,7 @@ exports.create = (req, res, next) => {
 
     // Validação
 
-    console.log("nome " + req.body.name);
+    console.log("nome " + req.body.nome);
     console.log("nome " + req.body.login);
     console.log("nome " + req.body.password);
 
@@ -20,7 +20,7 @@ exports.create = (req, res, next) => {
     }
 
     const usuario = new Usuario({
-        nome: req.body.name,
+        nome: req.body.nome,
         login: req.body.login,
         senha: req.body.password
     });
@@ -48,23 +48,14 @@ exports.login = (req, res) => {
         return;
     }
     
-
     const userLogin = {
         login: req.body.login,
         senha: req.body.password
     }
 
     const dadosUsuarioLogado = {
-        usuario: {
-
-        },
-        dashboard: {
-            
-            graficos: {
-
-            }
-        }
-
+        usuario: {},
+        dadosDashboard: {}
     }
     
     // função encarregada de trazer os dados a serem carregados na dashboard, talvez mudar o nome
@@ -79,12 +70,7 @@ exports.login = (req, res) => {
         })
         .then(dataDashboard => {
 
-            console.log("dadosUsuarioLogado ---- " + dataDashboard);
-
-            dadosUsuarioLogado.dashboard = {...dataDashboard}
-
-            console.log("----dataDashboard ")
-            console.table(dadosUsuarioLogado.dashboard);
+            dadosUsuarioLogado.dadosDashboard = {...dataDashboard}
 
             let data = {...dadosUsuarioLogado};
             
@@ -102,21 +88,12 @@ exports.login = (req, res) => {
 function carregaDadosDashboardByIdUser(idUser) {
     return new Promise( async (resolve, reject) => {
         try {
-            let dashboard = {         
-                
-                graficos: {
-        
-                }
-            }
 
-            let dataResult = await Dashboard.findDashboard(idUser);      
+            let dataResult = await Dashboard.carregaDadosDashboardByIdUser(idUser);      
 
-            dashboard = {...dataResult};
+            const data = {...dataResult};
 
-            dataResult = await Grafico.findGraficosById(dashboard.id_dashboard); 
-            dashboard.graficos = { ...dataResult };
-
-            resolve(dashboard);
+            resolve(data);
         } catch (err) {
             reject(err);
         }

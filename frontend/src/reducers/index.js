@@ -2,6 +2,9 @@
 // import relatorios from "./relatorioSatisfacaoReducer";
 // import produtos from "./produtoReducer";
 import dashboardReducer from "./dashboardReducer";
+import usuarioReducer from "./usuarioReducer";
+import dadosCsvReducer from "./dadosCsvReducer";
+
 import { combineReducers } from 'redux';
 
 export const Reducers = combineReducers({
@@ -10,4 +13,6 @@ export const Reducers = combineReducers({
     // produtos: produtos,
 
     dashboard: dashboardReducer,
+    usuario: usuarioReducer,
+    dadosCsv: dadosCsvReducer,
 });

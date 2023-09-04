@@ -66,7 +66,8 @@ const FormUploadDados = () => {
 
         dfd.readCSV(event.target.files[0])
             .then(df => {
-
+                let testeValues = df.loc({columns: ["State", "Segment", "Sales"]});
+                console.log(testeValues);
                 setFileData(df);
                 // fileData = df;
                 console.log("fileData ---- > ");

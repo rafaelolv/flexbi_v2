@@ -10,7 +10,7 @@ import style from '../../style/graficos/GraficosHome.module.css';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-const GraficoDoughnutAndamentoPorcentagem = () => {
+const GraficoDoughnutAndamentoPorcentagem = ({ valoresGraficoDoughnut, valorAndamentoMes }) => {
 
 
     const labels = [];
@@ -19,8 +19,8 @@ const GraficoDoughnutAndamentoPorcentagem = () => {
         labels: labels,
         datasets: [
             {
-                label: 'Meta a ser batida no mês',
-                data: [60, 40],
+                label: ' Percentual da meta',
+                data: valoresGraficoDoughnut,
                 backgroundColor: [
                     // 5c2092
                     '#00C5E0',
@@ -50,7 +50,7 @@ const GraficoDoughnutAndamentoPorcentagem = () => {
     return (
         <div className={style.graficoDoughnutAndamentoPorcentagem}>
             <Doughnut options={options} data={data} />
-            <VisorAreaMensal />
+            <VisorAreaMensal valorAndamentoMes={valorAndamentoMes} />
         </div>
     )
 }

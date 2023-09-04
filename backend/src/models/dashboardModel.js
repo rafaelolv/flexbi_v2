@@ -1,30 +1,47 @@
 const sql = require("../config/db.js");
 
 // constructor
-const Dashboard = function(dashboard) {
-    this.nome = dashboard.nome;
-    this.id_usuario = dashboard.id_usuario
+const Dashboard = function(dadosDashboard) {
+    this.produto = dadosDashboard.produto;
+    this.categoria = dadosDashboard.categoria;
+    this.data = dadosDashboard.data;
+    this.filtros = dadosDashboard.filtros;
+    this.id_usuario = dadosDashboard.id_usuario
 };
 
 
 // 
-Dashboard.create = (newDashboard) => {
+Dashboard.create = (dadosDashboard) => {
 
     console.log("model de dashboard");
     // const {nome, login, senha} = newUsuario;
 
     return new Promise (async (resolve, reject) => {
         try {
-            //-Pessoa e contato-------------------------------COMUM A TODOS
-            const queryCreateDashboard = 'INSERT INTO dashboard SET ?';
-            const {nome, id_usuario} = newDashboard;
 
-            console.log(nome + " " + id_usuario);
+            const queryCreateDadosDashboard = 'INSERT INTO dados_dashboard SET ?';
+            const {produto, categoria, data, filtros, id_usuario} = dadosDashboard;
 
-            const resultDashboard = await executeQuery(sql, queryCreateDashboard, {nome, id_usuario});
-            const data = {...newDashboard, id_dashboard: resultDashboard.insertId};
+            console.log(produto + " " + id_usuario);
 
-            resolve(data);
+            const resultDadosDashboard = await executeQuery(sql, queryCreateDadosDashboard, {produto, categoria, data, id_usuario});
+
+            console.log("chega aqui??? ");
+            let filtrosInseridos = [];
+            const queryInsertFiltrosDadosDashboard = 'INSERT INTO filtros SET ?';
+
+            console.log("resultDadosDashboard.insertId " + resultDadosDashboard.insertId);
+            const id_dadosDashboard = resultDadosDashboard.insertId;
+
+            dadosDashboard.filtros.forEach((filtro) => {
+                filtrosInseridos.push({nome_filtro: filtro, id_dados_dashboard: resultDadosDashboard.insertId});
+            })
+
+            const resultInsertFiltrosDadosDashboard = await executeQueryWithList(sql, queryInsertFiltrosDadosDashboard, filtrosInseridos);
+              
+            const data_dashboard = {...dadosDashboard, id_dadosDashboard: resultDadosDashboard.insertId, filtros: resultInsertFiltrosDadosDashboard};
+
+            resolve(data_dashboard);
 
         } catch (err) {
             reject(err);
@@ -61,14 +78,12 @@ Dashboard.carregaDadosDashboardByIdUser = (idUser) => {
 
             console.log("idUser " + idUser);
 
-            const queryCarregaDashboard = 'select * from usuario u inner join dashboard d on d.id_usuario = ?' +
-                ' inner join graficos g on g.id_dashboard = d.id_dashboard' +
-                ' inner join itens_grafico i on i.id_grafico = g.id_grafico';
+            const queryCarregaDadosDashboard = 'select * from dados_dashboard where (id_usuario = ?)';
             
             // const queryDashboard = 
 
 
-            const result = await executeQuery(sql, queryCarregaDashboard, idUser);
+            const result = await executeQuery(sql, queryCarregaDadosDashboard, idUser);
             const data = result[0];
 
             console.table(data);
@@ -80,6 +95,26 @@ Dashboard.carregaDadosDashboardByIdUser = (idUser) => {
             reject(err);
         }
     })
+}
+
+// 
+const executeQueryWithList = async (con, query, list) => {
+
+    console.log("list");
+    console.log(list);
+
+    return new Promise ((resolve, reject) => {
+        list.forEach((params) => {
+            con.query(query, params, (err, res) => {
+                if(err) {
+                    return reject(err);
+                }
+                // console.log(Object.values(res));
+                return resolve(res);
+            });
+            
+        })
+    });
 }
 
 

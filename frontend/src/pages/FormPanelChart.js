@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import BarChart from "../components/graficos/BarChart";
 import ModalFormDashboard from '../components/form/ModalFormDashboard';
 import FormUploadDadosCSV from "../components/form/FormUploadDadosCSV";
+import InputFiltros from "../components/form/InputFiltros";
 
 import imgGraficoBarrasHorizontal from '../images/imgGraficobarrashori.PNG';
 import imgGraficoBarline from '../images/imgGraficoBarLine.PNG';
 
-import { createGrafico } from "../actions/graficoAction";
+import { enviarDados } from "../actions/dashboardAction";
 
 import style from '../style/FormPanelChart.module.css';
 
@@ -16,6 +17,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+
 
 const styleMui = {
     position: 'absolute',
@@ -33,47 +35,36 @@ const styleMui = {
 // Página de cadastro de gráficos que aparecerão na dashboard do usuário
 const FormPanelChart = () => {
 
-    // Dados que viram previamente do banco, ver ainda se é isso mesmo, como vai fazer 
-    const initialStateGrafico = {
-        id_grafico: null,
-        id_dashboard: 1,
-        tipo: 'valor_geral_tempo'
+
+    // Dados que serão inseridos de acordo com os dados vindos de cada cliente(empresa)
+    const initialStateDadosDashboard = {
+        produto: "",
+        categoria: "",
+        data: "",
+        valor: "",
+        filtros: [],
     }
 
-    // Dados a serem inserios pelo usuário no form
-    const initialStateDadosGrafico = {
-        id_itens_grafico: null,
-        id_grafico: null,
-        label: "",
-        valor: "",
-        filtro: []
-    };
-
-
-    // 
-    const [grafico, setGrafico] = useState(initialStateGrafico);
-
-    //Para cadastro de graficos em uma dashboard existente
-    const [dadosGrafico, setDadosGrafico] = useState(initialStateDadosGrafico);
+    //Para cadastro dos dados a serem usados nas dashboards
+    const [dadosDashboard, setDadosDashboard] = useState(initialStateDadosDashboard);
 
     // A idéia é que sirva para setar os dados extraidos do CSV, ainda ver isso
     const [dadosApiCSV, setDadosApiCSV] = useState("");
 
     const dispatch = useDispatch();
 
-
-    // 
-    const handleInputChangeGrafico = event => {
-        const { name, value } = event.target;
-        setGrafico({ ...grafico, [name]: value });
-    };
-
         
-    // Método que captura a entrada(o que é inserido) no input
-    const handleInputChangeDadosGrafico = event => {
+    // Método que captura a entrada(o que é inserido) no input de dados 
+    const handleInputChangeDadosDashboard = event => {
         const { name, value } = event.target;
-        setDadosGrafico({ ...dadosGrafico, [name]: value });
+        setDadosDashboard({ ...dadosDashboard, [name]: value });
     };
+
+    // Método encarregado de setar os dados do input filtros no state dadosDashboard
+    const handleInputChangeFiltros = (listFiltros) => {
+        
+        setDadosDashboard({...dadosDashboard, filtros: [...dadosDashboard.filtros, ...listFiltros]});
+    }
 
 
     // Método usado para pegar e retornar uma dashboard
@@ -82,27 +73,25 @@ const FormPanelChart = () => {
     }
 
 
-    // 
-    const cadastrarGrafico = () => {
+    // Método utilizado para cadastrar os dados a serem usados nas dashboards de determinado cliente
+    const cadastrarDadosDashboard = () => {
 
-        console.log("cadastrarGrafico");
-        console.table(grafico);
+        console.log("cadastrarDadosDashboard");
+        console.table(dadosDashboard);
 
-        const newGrafico = {
-            grafico: grafico,
-            dadosGrafico: dadosGrafico
-        }
 
-        dispatch(createGrafico(newGrafico))
+        dispatch(enviarDados(dadosDashboard))
             .then(data => {
-                setDadosGrafico(data.dadosGrafico);
+                console.log("data");
+                console.log(data);
+                // setDadosDashboard(data);
 
             })
             .catch(e => {
                 console.log("ERRO: " + e);
             });
 
-            setDadosGrafico(initialStateDadosGrafico);
+            setDadosDashboard(initialStateDadosDashboard);
     }
 
     // 
@@ -114,62 +103,44 @@ const FormPanelChart = () => {
 
     return (
         <section className={style.box}>
-
-            {/* Modal cadastro da dashboard  */}
-            <ModalFormDashboard getDashboard={getDashboard} />
-    
-            <section className={style.areaFormChart}>
-                <div>
-                    {/* <h1>Área form gráficos</h1>
-                    <h1>Quais valores deverão ser apresentados nos gráficos?</h1> */}
-                    <img src={imgGraficoBarrasHorizontal} />
-                    <div className={style.areaFormChart}>
-                        <input type="text"
-                            id="label"
-                            name="label"
-                            placeholder="Label"
-                            required
-                            value={dadosGrafico.label}
-                            onChange={handleInputChangeDadosGrafico}
-                        />
-                        <input type="text"
-                            id="valor"
-                            name="valor"
-                            placeholder="Valor"
-                            required
-                            value={dadosGrafico.valor}
-                            onChange={handleInputChangeDadosGrafico}
-                        />
-                        <input type="text"
-                            id="filtro"
-                            name="filtro"
-                            placeholder="Filtros"
-                            required
-                            value={dadosGrafico.filtro}
-                            onChange={handleInputChangeDadosGrafico}
-                        />
-                    </div>
-                    {/* <button type="submit" onClick={addValue}>
-                        Add
-                    </button> */}
-                    <button type="submit" onClick={cadastrarGrafico}>
-                        Cadastrar
-                    </button>
-                </div>
-                {/* <div>
-                    <img src={imgGraficoBarline} />
-                    <div className={style.areaFormChart}>
-                        <input></input>
-                    </div>
-                </div> */}
-            </section>
-            {/* <FormUploadDadosCSV configValues={valores} recebeDadosFromApiCSV={recebeDadosFromApiCSV}/> */}
-            {/* <section className={style.areaChart}>
-                <div>
-                    <h1>Grafico carregado</h1>
-                    <BarChart />
-                </div>
-            </section> */}
+            <form>
+                <input type="text"
+                    id="produto"
+                    name="produto"
+                    placeholder="produto/serviço"
+                    required
+                    value={dadosDashboard.produto}
+                    onChange={handleInputChangeDadosDashboard}
+                />
+                <input type="text"
+                    id="categoria"
+                    name="categoria"
+                    placeholder="Categoria"
+                    required
+                    value={dadosDashboard.categoria}
+                    onChange={handleInputChangeDadosDashboard}
+                />
+                <input type="text"
+                    id="data"
+                    name="data"
+                    placeholder="Data"
+                    required
+                    value={dadosDashboard.data}
+                    onChange={handleInputChangeDadosDashboard}
+                />
+                <input type="text"
+                    id="data"
+                    name="valor"
+                    placeholder="Valor"
+                    required
+                    value={dadosDashboard.valor}
+                    onChange={handleInputChangeDadosDashboard}
+                />
+                <InputFiltros handleInputChangeFiltros={handleInputChangeFiltros} />
+            </form>
+            <button type="submit" onClick={cadastrarDadosDashboard}>
+                Cadastrar
+            </button>
         </section>
     )
 };

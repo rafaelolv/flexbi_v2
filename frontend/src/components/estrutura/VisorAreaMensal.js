@@ -4,7 +4,7 @@ import { React } from 'react';
 import style from '../../style/estrutura/AreaMensalHome.module.css';
 
 
-const VisorAreaMensal = () => {
+const VisorAreaMensal = ({ valorAndamentoMes }) => {
 
 
     return (

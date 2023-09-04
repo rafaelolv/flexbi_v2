@@ -4,7 +4,7 @@ import style from '../../style/estrutura/AreaMensalHome.module.css';
 
 
 
-const BoxInfo = ({ styleBoxInfo, dataBoxInfo }) => {
+const BoxInfo = ({ styleBoxInfo, dataBoxInfo, label, item }) => {
 
 
     return (
@@ -14,7 +14,7 @@ const BoxInfo = ({ styleBoxInfo, dataBoxInfo }) => {
                     {dataBoxInfo}
                 </div>
                 <div>
-                    <h4>Ticket Médio</h4>
+                    <h4>{label}</h4>
                 </div>
             </header>
             <div>

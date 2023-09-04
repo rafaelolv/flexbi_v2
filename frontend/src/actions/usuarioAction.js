@@ -1,15 +1,16 @@
 import UsuarioService from "../services/UsuarioService";
-import { GET_DADOS_DASHBOARD } from "./actionTypes/dashboardActionTypes";
+import { GET_DADOS_DASHBOARD, GET_INFOS_DASHBOARD } from "./actionTypes/dashboardActionTypes";
+import { GET_USER } from "./actionTypes/usuarioActionTypes";
 
 
-export const createUser = (name, login, password) => async () => {
+export const createUser = ({nome, login, password}) => async () => {
 
     // console.log("createUser " + data);
 
     // console.log(Object.values(data));
 
     try {
-        const res = await UsuarioService.create({ name, login, password });
+        const res = await UsuarioService.create({ nome, login, password });
 
         // Para quando for  usar o redux, e coloca dispatch lá no parenteses do async
         // dispatch({
@@ -27,19 +28,23 @@ export const loginUser = (login, password) => async (dispatch) => {
     try {
         const res  = await UsuarioService.login({ login, password });
 
-        console.log("res.data " + res.data.dashboard.graficos);
-        console.table(res.data.dashboard);
+        console.log("res.data ");
+        console.log(res.data);
+        console.table(res.data);
 
-        // dispatch({
-        //     type: RETRIEVE_DASHBOARD,
-        //     payload: res.data
-        // });
+        console.log("res.data.dadosDashboard");
+        console.log(res.data.dadosDashboard);
+
+        dispatch({
+            type: GET_USER,
+            payload: res.data.usuario
+        });
 
         console.log("loginUser!!!!");
 
         dispatch({
-            type: GET_DADOS_DASHBOARD,
-            payload: res.data.dashboard
+            type: GET_INFOS_DASHBOARD,
+            payload: res.data.dadosDashboard
         });
 
         // Aqui coloca os dispatchs para o redux

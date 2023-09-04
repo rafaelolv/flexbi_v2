@@ -31,9 +31,13 @@ const FormUserRegister = ({ nomeBotao, isRegister }) => {
     console.log("Chegou?");
     let navigate = useNavigate();
 
-    const [name, setName] = useState(null);
-    const [login, setLogin] = useState(null);
-    const [password, setPassword] = useState(null);
+    const initialDadosUserRegister = {
+        nome: "",
+        login: "",
+        password: ""
+    }
+
+    const [dadosUserRegister, setDadosUserRegister] = useState(initialDadosUserRegister);
     const [isLogin, setIsLogin] = useState(isRegister);
 
     // Estados do modal
@@ -51,37 +55,25 @@ const FormUserRegister = ({ nomeBotao, isRegister }) => {
     const dispatch = useDispatch();
 
 
-    // 
-    const onChangeName = (e) => {
-        const name = e.target.value;
-        setName(name);
-    };
-
-    // 
-    const onChangeLogin = (e) => {
-        const login = e.target.value;
-        setLogin(login);
-    };
-    
-    // 
-    const onChangePassword = (e) => {
-        const senha = e.target.value;
-        setPassword(senha);
+    const handleInputChangeDadosUserRegister = event => {
+        const { name, value } = event.target;
+        setDadosUserRegister({ ...dadosUserRegister, [name]: value });
     };
 
     
     //Método responsável por realizar o cadastro de usuários
     const efetuarCadastro = () => {
         setIsLogin(false);
+
+        const {nome, login, password} = dadosUserRegister;
         
-        console.log("efetuarCadastro " + name);
+        console.log("efetuarCadastro " + dadosUserRegister.nome);
 
-        dispatch(createUser(name, login, password))
+        dispatch(createUser({nome, login, password}))
             .then(data => {
-                setName(data.name);
 
-                console.log("resposta then " + name);
-                console.log(data.name);
+                console.log("resposta then " + nome);
+                console.log(data.nome);
             })
             .catch(e => {
                 console.log("ERRO: " + e);
@@ -95,12 +87,14 @@ const FormUserRegister = ({ nomeBotao, isRegister }) => {
     const efetuarLogin = () => {
         setIsLogin(true);
 
+        console.log("Entrou login");
+
+        const {login, password} = dadosUserRegister;
+
         dispatch(loginUser(login, password))
             .then(data => {
                 console.log("Login efetuado com sucesso ");
                 console.table(data);
-
-                // Fazer select para trazer os dados do usuario, inclusive os dados dos graficos
 
                 navigate("/home");
             })
@@ -120,57 +114,29 @@ const FormUserRegister = ({ nomeBotao, isRegister }) => {
                 aria-describedby="modal-modal-description"
             >
         
-                <Box sx={style}>
-                    <section className={style.box}>
-                        <div className={style.boxAreaLogin} >
-                            {!isLogin ? (
-                                <div>
-                                    <label htmlFor="Nome">
-                                        Nome
-                                    </label><br/>
-                                    <input 
-                                        type="text"
-                                        id="name"
-                                        label="Nome"
-                                        name="userName"
-                                        required
-                                        value={name}
-                                        onChange={onChangeName}
-                                        />
-                                </div>
-                                ) : <></>}
-                                <div>
-                                    <label htmlFor="login">
-                                        Login
-                                    </label><br/>
-                                    <input 
-                                        type="text"
-                                        id="login"
-                                        label="Login"
-                                        name="login"
-                                        required
-                                        value={login}
-                                        onChange={onChangeLogin}
-                                        />
-                                </div>
-                                <div>
-                                    <label htmlFor="Senha">
-                                        Senha
-                                    </label><br/>
-                                    <input 
-                                        type="text" id="password" label="Senha" name="password" required value={password} onChange={onChangePassword}
-                                    />
-                                </div>
-                                <div className={style.boxEntrarCriarButton}>
-                                    <button onClick={efetuarLogin}>
-                                        Entrar
-                                    </button>
-                                    <button onClick={efetuarCadastro}>
-                                        Criar nova conta
-                                    </button>
-                                </div>
+                <Box sx={styleMui}>
+                    <form>
+                        {!isLogin ? (
+                            <div>
+                                <input type="text" id="nome" label="Nome" placeholder="Nome" name="nome" required value={dadosUserRegister.nome} onChange={handleInputChangeDadosUserRegister} />
+                            </div>
+                        ) : <></>}
+                        <div>
+                            <input type="text" id="login" label="Login" placeholder="Login" name="login" required value={dadosUserRegister.login} onChange={handleInputChangeDadosUserRegister} />
                         </div>
-                    </section>
+                        <div>
+                            <input 
+                                type="text" id="password" label="Senha" placeholder="Senha" name="password" required value={dadosUserRegister.password} onChange={handleInputChangeDadosUserRegister} />
+                        </div>
+                        <div className={style.boxEntrarCriarButton}>
+                            <button type="button" className={style.loginButton} onClick={isRegister ? efetuarLogin : efetuarCadastro}>
+                                {isRegister ? "Login" : "Cadastrar"}
+                            </button>
+                            <button type="button" onClick={efetuarCadastro}>
+                                Criar nova conta
+                            </button>
+                        </div>
+                    </form>
                 </Box>
             </Modal>
         </>

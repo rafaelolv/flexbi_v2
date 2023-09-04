@@ -5,7 +5,7 @@ import BarraProgresso from "./BarraProgresso";
 import style from "../../style/estrutura/AreaMensalHome.module.css";
 
 
-const LineAndamentoLucroMes = () => {
+const LineAndamentoLucroMes = ({ meta, valorAndamentoMes }) => {
 
 
     return (

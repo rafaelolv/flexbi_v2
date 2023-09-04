@@ -1,7 +1,16 @@
-import { RETRIEVE_DASHBOARD, GET_DADOS_DASHBOARD, CREATE_DASHBOARD } from '../actions/actionTypes/dashboardActionTypes';
+import { RETRIEVE_DASHBOARD, GET_DADOS_DASHBOARD, CREATE_DASHBOARD, GET_INFOS_DASHBOARD, CREATE_INFOS_DASHBOARD } from '../actions/actionTypes/dashboardActionTypes';
 
 
-const initialState = [];
+const testeDadosDashboard = {
+	categoria: "Category",
+	data: "Order Date",
+	id_dados_dashboard: 1,
+	id_usuario: 1,
+	produto: "Product Name",
+	valor: "Sales"
+}
+
+const initialState = testeDadosDashboard;
 
 function dashboardReducer(dashboard = initialState, action) {
 	const { type, payload } = action;
@@ -15,14 +24,15 @@ function dashboardReducer(dashboard = initialState, action) {
     	case RETRIEVE_DASHBOARD:
       		return payload;
 
+		case GET_INFOS_DASHBOARD:
+			return payload;
+
 		case GET_DADOS_DASHBOARD:
 			console.log("payload");
+			console.log(payload);
 			console.table(payload);
 			return payload;
 
-    	// case CREATE_GRAFICO
-    
-    	// case UPDATE_GRAFICO
 
 		// case UPDATE_TUTORIAL:
 		//   return tutorials.map((tutorial) => {

@@ -7,6 +7,7 @@ import Header from './components/estrutura/Header';
 import Main from './pages/Main';
 import FormPanelChart from './pages/FormPanelChart';
 import UserDashboard from './pages/UserDashboard';
+import CategoriaDashboard from './pages/CategoriaDashboard';
 // import Painel from './pages/Painel';
 // import Login from './pages/Login';
 // import Dashboard from './pages/Dashboard';
@@ -26,11 +27,13 @@ export default props => {
 					<Route exact path='/main' element={<Main />} />
 					{/* <Route exact path='/login' element={<Login />} /> */}
 					<Route exact path={"/home"} element={<UserDashboard />} />
-					{/* <Route exact path='/formChart' element={<FormPanelChart />} /> */}
+					<Route exact path={"/categorias"} element={<CategoriaDashboard />} />
+					
+					<Route exact path='/formChart' element={<FormPanelChart />} />
 					{/* <Route exact path={"/"} element={<Dashboard />} /> */}
-					{/* <Route exact path={"/form"} element={<FormUploadDados />} /> */}
+					<Route exact path={"/form"} element={<FormUploadDados />} />
 					{/* <Route exact path="/gerar" element={<PaginaGeraDadosJSON />} /> */}
 				</Routes>
 			</BrowserRouter>
-		)
+	)
 };

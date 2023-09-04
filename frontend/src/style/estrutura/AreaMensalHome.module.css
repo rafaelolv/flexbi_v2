@@ -1,7 +1,7 @@
 .boxAreaMensal  {
     display: flex;
     flex-direction: row;
-    width: 140vh;
+    width: 70%;
     height: 35%;
     margin: 2vh;
     border-radius: 34px;

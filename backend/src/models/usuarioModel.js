@@ -45,31 +45,9 @@ Usuario.findByLoginSenha = (userLogin) => {
             const queryLogin = 'select * from usuario where (login = ? AND senha = ?)';
             const resultUsuario = await executeQuery(sql, queryLogin, [login, senha]);
 
-            console.log("ResultUsuario " + resultUsuario);
-
             const data = resultUsuario[0];
 
             console.log("resultUsuario model " + data.login);
-
-            // if(resultDadosAcesso[0] !== undefined) {
-            //     const queryPessoaLogada = 'select * from pessoa where id_pessoa = ?';
-            //     const resultPessoa = await executeQuery(sql, queryPessoaLogada, resultDadosAcesso[0].id_pessoa);
-
-            //     const data = {pessoa: {...resultPessoa[0]}, funcionario: null, cliente: null};
-
-            //     const queryFuncionario = 'select id_funcionario from funcionario where id_pessoa = ?';
-            //     const resultIdFuncionario = await executeQuery(sql, queryFuncionario, data.pessoa.id_pessoa);
-
-            //     if(resultIdFuncionario[0] !== undefined) {
-            //         data.funcionario = {id_funcionario: resultIdFuncionario[0].id_funcionario};
-            //     }
-
-            //     const querycliente = 'select * from cliente where id_pessoa = ?';
-            //     const resultClinte =  executeQuery(sql, querycliente, data.pessoa.id_pessoa);
-
-            //     if(resultClinte[0] !== undefined) {
-            //         data = {...data, cliente: {...resultClinte[0]} };        
-            //     }
 
             resolve(data);
         } catch (err) {
@@ -82,12 +60,12 @@ Usuario.findByLoginSenha = (userLogin) => {
 
 
 const executeQuery = async (con, query, params) => {
+
     return new Promise ((resolve, reject) => {
         con.query(query, params, (err, res) => {
             if(err) {
                 return reject(err);
             }
-            // console.log(Object.values(res));
             return resolve(res);
         });
     });
